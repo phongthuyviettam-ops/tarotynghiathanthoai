@@ -1,0 +1,1052 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarot Thai Mythology - Song ngữ Việt Anh</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .bilingual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .lang-panel {
+      border: 1px solid #eadfca;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fffdf8;
+    }
+    .lang-panel.en {
+      background: #f7fbff;
+      border-color: #cbd9e4;
+    }
+    .lang-title {
+      margin-bottom: 8px;
+      color: #426b5b;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .lang-panel.en .lang-title {
+      color: #456f92;
+    }
+    .info-block {
+      margin-top: 9px;
+    }
+    .info-block strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #6f5425;
+    }
+    .lang-panel.en .info-block strong {
+      color: #365f7a;
+    }
+    .info-block p {
+      color: #343a39;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .section-heading { margin: 28px 0 14px; }
+    .section-heading h2 { margin-bottom: 5px; }
+    .nav-button { display: block; text-decoration: none; }
+    @media (max-width: 760px) {
+      .bilingual-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">65</div>
+        <div>
+          <h1>Tarot Song Ngữ</h1>
+          <p>Vietnamese and English meanings side by side</p>
+        </div>
+      </div>
+      <label class="search-box">
+        <span>Tìm lá bài / Search</span>
+        <input id="searchInput" type="search" placeholder="Tên, keyword, symbol...">
+      </label>
+      <nav id="sectionNav" class="section-nav" aria-label="Danh mục bộ bài"></nav>
+      <div class="stats">
+        <strong id="visibleCount">65</strong>
+        <span>lá đang hiển thị</span>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">Song ngữ Việt Anh</p>
+          <h2 id="activeTitle">Tất cả 65 lá</h2>
+        </div>
+      </div>
+      <div id="cardGrid" class="card-grid"></div>
+    </main>
+  </div>
+
+  <script>
+    const DATA = {
+    "sections":  [
+                     {
+                         "id":  "thai-34",
+                         "title":  "Bộ thần thoại Thái 34 lá",
+                         "subtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                         "count":  34
+                     },
+                     {
+                         "id":  "zodiac-12",
+                         "title":  "Bộ 12 con giáp",
+                         "subtitle":  "Promayaan Birth-Year Cards",
+                         "count":  12
+                     },
+                     {
+                         "id":  "symbol-12",
+                         "title":  "Bộ 12 biểu tượng",
+                         "subtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                         "count":  12
+                     },
+                     {
+                         "id":  "planet-7",
+                         "title":  "Bộ 7 hành tinh",
+                         "subtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                         "count":  7
+                     }
+                 ],
+    "cards":  [
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  1,
+                      "title":  "Card 1 - Phra Phloeng (พระเพลิง)",
+                      "name":  "Phra Phloeng (พระเพลิง)",
+                      "legend":  "Phra Phloeng là vị thần cai quản ngọn lửa trong tín ngưỡng Thái Lan, có nguồn gốc từ thần Agni của Ấn Độ giáo. Ngọn lửa thiêng vừa thanh tẩy điều ô uế, vừa mở đường cho sự tái sinh và khởi đầu mới.",
+                      "visual":  "Trên hình có ngọn lửa trên tay, nền cam đỏ và khói mây. Lửa tượng trưng cho sức sống, ý chí và sự thanh tẩy; ánh sáng nóng nói rằng lá bài mang năng lượng hành động, đốt bỏ điều cũ để mở đường mới.",
+                      "keywords":  "Nhiệt huyết • Hành động • Chuyển hóa • Thanh tẩy • Khởi đầu • Quyết tâm • Đam mê • Sức mạnh • Ý chí • Tái sinh",
+                      "image":  "assets/thai-34-01.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  2,
+                      "title":  "Card 2 - Parvati (ปารวตี)",
+                      "name":  "Parvati (ปารวตี)",
+                      "legend":  "Parvati là vợ của thần Shiva và là mẹ của Ganesha cùng Kartikeya. Bà tượng trưng cho tình yêu, sự dịu dàng, lòng bao dung và sức mạnh bền bỉ của người phụ nữ.",
+                      "visual":  "Trên hình có Parvati ngồi trên ngai cùng đứa trẻ đầu voi Ganesha, cạnh hoa sen và không gian cung điện. Đứa trẻ nói về gia đình và sự chăm sóc; hoa sen tượng trưng cho tình yêu trong sạch, còn ngai vàng nói về vai trò người mẹ, người bảo hộ.",
+                      "keywords":  "Gia đình • Tình yêu • Bao dung • Hy sinh • Chăm sóc • Nuôi dưỡng • Hạnh phúc • Bình an • Đức hạnh • Nữ tính",
+                      "image":  "assets/thai-34-02.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  3,
+                      "title":  "Card 3 - Kartikeya (ขันธกุมาร)",
+                      "name":  "Kartikeya (ขันธกุมาร)",
+                      "legend":  "Kartikeya là con trai của Shiva và Parvati, vị thần chiến tranh được sinh ra để lãnh đạo thiên binh tiêu diệt quỷ dữ. Hình tượng của ngài gắn với dũng cảm, trí tuệ và khả năng lãnh đạo.",
+                      "visual":  "Trên hình có vị thần trẻ cầm giáo dài, sau đầu có vòng sáng, dưới chân có lửa và phía sau là đền tháp. Giáo tượng trưng cho quyết tâm và chiến thắng; vòng sáng là trí tuệ, còn ngọn lửa dưới chân nói về ý chí tiến lên.",
+                      "keywords":  "Chiến thắng • Dũng cảm • Lãnh đạo • Thành công • Quyết đoán • Hành động • Bảo vệ • Vượt khó • Ý chí • Tiến lên",
+                      "image":  "assets/thai-34-03.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  4,
+                      "title":  "Card 4 - Phra Phirun (พระพิรุณ)",
+                      "name":  "Phra Phirun (พระพิรุณ)",
+                      "legend":  "Phra Phirun có nguồn gốc từ thần Varuna, cai quản mưa, nguồn nước và đại dương. Ngài mang nước đến cho cây cối, mùa màng và sự sống, đồng thời tượng trưng cho công bằng và phước lành từ thiên nhiên.",
+                      "visual":  "Trên hình có vị thần ngồi trên voi, tay cầm đám mây mưa và bên dưới là nước. Voi tượng trưng cho sức mạnh bền bỉ; mây mưa là phước lành, sự nuôi dưỡng và điều kiện thuận lợi cho mùa màng phát triển.",
+                      "keywords":  "Mưa thuận • Chữa lành • Cảm xúc • Thanh lọc • Bình an • Phát triển • Sinh sôi • Cân bằng • Phúc lành • Thuận lợi",
+                      "image":  "assets/thai-34-04.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  5,
+                      "title":  "Card 5 - Brahma Rishi (พรหมฤๅษี)",
+                      "name":  "Brahma Rishi (พรหมฤๅษี)",
+                      "legend":  "Brahma Rishi là danh hiệu dành cho những bậc hiền triết đạt đến trí tuệ và giác ngộ sau quá trình tu hành lâu dài. Các vị truyền dạy chân lý, đạo đức và tri thức cho con người.",
+                      "visual":  "Trên hình có bậc hiền triết ngồi thiền trên da hổ, tay cầm pháp khí, phía sau có ánh sáng và núi xa. Da hổ nói về việc chế ngự bản năng; dáng thiền tượng trưng cho trí tuệ, còn ánh sáng sau lưng là sự khai sáng.",
+                      "keywords":  "Trí tuệ • Giác ngộ • Minh triết • Học hỏi • Thiền định • Kinh nghiệm • Chỉ dẫn • Bình tĩnh • Cố vấn • Khai sáng",
+                      "image":  "assets/thai-34-05.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  6,
+                      "title":  "Card 6 - Saraswati (สุรัสวดี)",
+                      "name":  "Saraswati (สุรัสวดี)",
+                      "legend":  "Saraswati là nữ thần của tri thức, nghệ thuật, âm nhạc và ngôn ngữ. Bà thường cầm đàn veena và kinh sách, tượng trưng cho trí tuệ, sáng tạo và thành tựu học vấn.",
+                      "visual":  "Trên hình có nữ thần đứng trên chim thiên nga trắng, tay cầm đàn và pháp khí, nền sáng nhiều màu. Thiên nga tượng trưng cho sự tinh khiết và khả năng phân biệt đúng sai; cây đàn nói về nghệ thuật, âm nhạc và tri thức.",
+                      "keywords":  "Tri thức • Học tập • Nghệ thuật • Sáng tạo • Giao tiếp • Trí tuệ • Cảm hứng • Giáo dục • Tài năng • Thành tựu",
+                      "image":  "assets/thai-34-06.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  7,
+                      "title":  "Card 7 - Thao Virulhaka (ท้าววิรุฬหก)",
+                      "name":  "Thao Virulhaka (ท้าววิรุฬหก)",
+                      "legend":  "Thao Virulhaka là một trong Tứ Đại Thiên Vương, cai quản phương Nam và bảo vệ thế giới loài người. Ngài giữ gìn trật tự, bảo vệ chính pháp và tiêu trừ tà ác.",
+                      "visual":  "Trên hình có vị thiên vương mặc giáp vàng, đứng cạnh hổ và cầm vũ khí. Hổ tượng trưng cho sức mạnh được kiểm soát; giáp vàng nói về uy quyền, còn vũ khí cho thấy năng lượng bảo vệ và giữ gìn chính nghĩa.",
+                      "keywords":  "Bảo vệ • Chính trực • Kỷ luật • Trách nhiệm • Sức mạnh • Kiên định • Công bằng • Uy tín • Lãnh đạo • Ổn định",
+                      "image":  "assets/thai-34-07.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  8,
+                      "title":  "Card 8 - Phra Asurin Rahu (พระอสุรินทราหู)",
+                      "name":  "Phra Asurin Rahu (พระอสุรินทราหู)",
+                      "legend":  "Phra Asurin Rahu là hình tượng Rahu trong thân phận Asura, mang sức mạnh của bóng tối và thử thách. Câu chuyện của ngài nhắc con người vượt qua tham vọng và cám dỗ để trưởng thành.",
+                      "visual":  "Trên hình có thân người màu tối, rắn lớn quấn quanh, tay cầm vũ khí và phía sau có lửa. Rắn nói về nghiệp lực, cám dỗ và sức mạnh tiềm ẩn; màu tối tượng trưng cho phần bóng trong nội tâm cần được nhận diện.",
+                      "keywords":  "Thử thách • Tham vọng • Cám dỗ • Biến động • Bí mật • Nghiệp quả • Chuyển hóa • Nội tâm • Thức tỉnh • Kiên cường",
+                      "image":  "assets/thai-34-08.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  9,
+                      "title":  "Card 9 - Phra Ketu Mongkol (พระเกตุมงคล)",
+                      "name":  "Phra Ketu Mongkol (พระเกตุมงคล)",
+                      "legend":  "Phra Ketu Mongkol là biểu tượng của Ketu, thiên thể đại diện cho nghiệp duyên, trực giác và con đường tâm linh. Ngài giúp con người buông bỏ chấp niệm để hướng đến giác ngộ.",
+                      "visual":  "Trên hình có vị thần đứng trên rắn Naga giữa biển, tay cầm cờ đỏ và vòng sáng trên đầu. Naga tượng trưng cho nghiệp duyên và quyền năng tâm linh; biển là cảm xúc sâu, còn cờ đỏ là dấu hiệu cảnh báo và định hướng.",
+                      "keywords":  "Giác ngộ • Trực giác • Tâm linh • Buông bỏ • May mắn • Nội tâm • Nghiệp duyên • Chữa lành • Bình an • Khai sáng",
+                      "image":  "assets/thai-34-09.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  10,
+                      "title":  "Card 10 - Thao Wessuwan (ท้าวเวสสุวรรณ)",
+                      "name":  "Thao Wessuwan (ท้าวเวสสุวรรณ)",
+                      "legend":  "Thao Wessuwan, hay Kubera, là Thiên Vương phương Bắc và vị thần cai quản của cải, kho báu. Ngài bảo vệ con người khỏi tà khí, mang tài lộc và sự thịnh vượng cho người sống chân chính.",
+                      "visual":  "Trên hình có vị thần hộ pháp đứng thẳng, tay cầm gậy quyền trượng, xung quanh có hào quang và kho báu. Gậy tượng trưng cho quyền lực bảo vệ; ánh sáng sau lưng là uy lực xua tà, còn vàng bạc nói về tài lộc được canh giữ.",
+                      "keywords":  "Tài lộc • Thịnh vượng • Giàu có • Bảo hộ • Quyền lực • Phước lành • Thành công • Sung túc • May mắn • An toàn",
+                      "image":  "assets/thai-34-10.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  11,
+                      "title":  "Card 11 - Phra Phikanet / Ganesha (พระพิฆเนศ)",
+                      "name":  "Phra Phikanet / Ganesha (พระพิฆเนศ)",
+                      "legend":  "Phra Phikanet, hay Ganesha, là con trai của Shiva và Parvati. Sau khi được hồi sinh với đầu voi, ngài trở thành vị thần trí tuệ, thông thái và xóa bỏ chướng ngại trên đường thành công.",
+                      "visual":  "Trên hình có Ganesha đầu voi nằm thư thái trong cung điện, xung quanh có trái cây, rèm vàng và pháp khí. Đầu voi là trí tuệ lớn; trái cây tượng trưng cho thành quả, còn dáng nằm nói về sự bình tĩnh khi tháo gỡ chướng ngại.",
+                      "keywords":  "Khởi đầu • Trí tuệ • May mắn • Vượt chướng ngại • Thành công • Sáng tạo • Học tập • Cơ hội • Khôn ngoan • Phát triển",
+                      "image":  "assets/thai-34-11.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  12,
+                      "title":  "Card 12 - Phra Rahu (พระราหู)",
+                      "name":  "Phra Rahu (พระราหู)",
+                      "legend":  "Phra Rahu gắn với hiện tượng nhật thực và nguyệt thực. Trong thần thoại, Rahu luôn đuổi theo Mặt Trời và Mặt Trăng, tượng trưng cho biến cố bất ngờ, nghiệp duyên và sự chuyển mình sau khó khăn.",
+                      "visual":  "Trên hình có gương mặt Rahu khổng lồ trong bóng tối, miệng giữ vòng tròn sáng như mặt trăng. Vầng sáng bị nuốt tượng trưng cho nhật thực, nguyệt thực và bí mật bị che khuất; bóng tối nhắc phải cẩn trọng trước biến động.",
+                      "keywords":  "Biến động • Bí mật • Tham vọng • Cảnh báo • Nghiệp quả • Thử thách • Thay đổi • Nội tâm • Cẩn trọng • Thức tỉnh",
+                      "image":  "assets/thai-34-12.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  13,
+                      "title":  "Card 13 - Phra Shiva (พระศิวะ)",
+                      "name":  "Phra Shiva (พระศิวะ)",
+                      "legend":  "Phra Shiva là một trong Tam vị nhất thể của Ấn Độ giáo, giữ vai trò thần Hủy Diệt và Tái Sinh. Sự hủy diệt của Shiva nhằm kết thúc cái cũ để mở đường cho điều mới tốt đẹp hơn.",
+                      "visual":  "Trên hình có Shiva ngồi thiền trên da hổ, cạnh cây đinh ba, sau lưng là núi tuyết và vầng sáng. Đinh ba tượng trưng cho quyền năng phá bỏ vô minh; da hổ là sự chế ngự dục vọng, còn núi tuyết nói về tĩnh tâm và tu luyện.",
+                      "keywords":  "Chuyển hóa • Tái sinh • Nội lực • Sức mạnh • Thay đổi • Buông bỏ • Kiên cường • Giác ngộ • Kết thúc • Khởi đầu",
+                      "image":  "assets/thai-34-13.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  14,
+                      "title":  "Card 14 - Phra In / Indra (พระอินทร์)",
+                      "name":  "Phra In / Indra (พระอินทร์)",
+                      "legend":  "Phra In, hay Indra, là vua của các vị thần trên cõi trời Đao Lợi, cai quản sấm sét, mưa gió và bầu trời. Ngài bảo vệ chính nghĩa và giúp người lương thiện vượt qua hiểm nguy.",
+                      "visual":  "Trên hình có Indra ngồi trên voi trắng, phía sau có mưa, mây và tia sáng. Voi trắng tượng trưng cho vương quyền và sự cao quý; mưa là phước lành, còn ánh sáng phía sau thể hiện quyền uy của người lãnh đạo.",
+                      "keywords":  "Lãnh đạo • Quyền lực • Danh tiếng • Chính nghĩa • Thành công • Uy tín • Bảo hộ • Chiến thắng • Quyết đoán • Tự tin",
+                      "image":  "assets/thai-34-14.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  15,
+                      "title":  "Card 15 - Phra Lakshmi (พระลักษมี)",
+                      "name":  "Phra Lakshmi (พระลักษมี)",
+                      "legend":  "Phra Lakshmi là nữ thần của giàu có, phồn vinh và hạnh phúc. Bà mang đến sự sung túc vật chất lẫn tinh thần cho những người sống lương thiện, chăm chỉ và biết sẻ chia.",
+                      "visual":  "Trên hình có Lakshmi ngồi trên hoa sen, tay cầm hoa sen, xung quanh có nước và ánh vàng. Hoa sen là sự thanh khiết vươn lên từ bùn; nước tượng trưng cho dòng tài lộc, còn ánh vàng nói về sung túc và phước lành.",
+                      "keywords":  "Tài lộc • Phồn vinh • Sung túc • Giàu sang • Hạnh phúc • May mắn • Thịnh vượng • Phước lành • Thành tựu • Viên mãn",
+                      "image":  "assets/thai-34-15.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  16,
+                      "title":  "Card 16 - Thao Dhatarattha (ท้าวธตรฐ)",
+                      "name":  "Thao Dhatarattha (ท้าวธตรฐ)",
+                      "legend":  "Thao Dhatarattha là một trong Tứ Đại Thiên Vương, cai quản phương Đông và bảo vệ thế gian. Ngài giữ gìn hòa bình, bảo hộ chúng sinh và duy trì sự hài hòa giữa trời đất.",
+                      "visual":  "Trên hình có vị thiên vương đứng giữa mây nước, tay cầm pháp khí, phía dưới có thuyền và hòm báu. Pháp khí là năng lực bảo hộ; thuyền nói về hành trình vượt qua sóng gió, còn hòm báu là nền tảng ổn định cần gìn giữ.",
+                      "keywords":  "Hòa hợp • Bảo vệ • Khởi đầu • Bình an • Trách nhiệm • Công bằng • Phát triển • Tin cậy • Ổn định • Đức độ",
+                      "image":  "assets/thai-34-16.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  17,
+                      "title":  "Card 17 - Phra Vishnukam / Vishvakarma (พระวิษณุกรรม)",
+                      "name":  "Phra Vishnukam / Vishvakarma (พระวิษณุกรรม)",
+                      "legend":  "Phra Vishnukam là vị thần kiến trúc và chế tác của chư thiên. Ngài tạo nên cung điện, vũ khí thần thánh và những công trình kỳ vĩ, được xem là tổ nghề của người làm kỹ thuật và sáng tạo.",
+                      "visual":  "Trên hình có vị thần ngồi trong cung điện, tay cầm dụng cụ và bản vẽ, bên cạnh có rương/hòm. Dụng cụ tượng trưng cho tay nghề; bản vẽ nói về kế hoạch, còn chiếc hòm là thành quả vật chất được tạo ra từ lao động.",
+                      "keywords":  "Sáng tạo • Kỹ thuật • Xây dựng • Tay nghề • Thiết kế • Chế tác • Lao động • Phát minh • Khéo léo • Thành tựu",
+                      "image":  "assets/thai-34-17.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  18,
+                      "title":  "Card 18 - Phra Narai Song Suban (พระนารายณ์ทรงสุบรรณ)",
+                      "name":  "Phra Narai Song Suban (พระนารายณ์ทรงสุบรรณ)",
+                      "legend":  "Phra Narai Song Suban là hình tượng thần Narai, tức Vishnu, cưỡi chim thần Garuda. Vishnu bảo hộ vũ trụ, còn Garuda tượng trưng cho sức mạnh, tốc độ và lòng trung thành.",
+                      "visual":  "Trên hình có Vishnu cưỡi chim Garuda đỏ, tay cầm pháp khí và bay giữa mây lửa. Garuda tượng trưng cho tốc độ, lòng trung thành và sức mạnh chiến đấu; pháp khí nói về quyền năng bảo hộ, còn lửa là chính nghĩa đang bùng lên.",
+                      "keywords":  "Bảo hộ • Công lý • Chính nghĩa • Trách nhiệm • Quyền năng • Thành công • Cứu giúp • Lãnh đạo • Trung thành • Chiến thắng",
+                      "image":  "assets/thai-34-18.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  19,
+                      "title":  "Card 19 - Phra Thevathasi (พระเทวฤๅษี)",
+                      "name":  "Phra Thevathasi (พระเทวฤๅษี)",
+                      "legend":  "Phra Thevathasi là hình tượng của các đạo sĩ và hiền triết đạt trí tuệ cao nhờ tu tập lâu dài. Các ngài là cầu nối giữa thần linh và con người, truyền dạy kiến thức, đạo lý và con đường giác ngộ.",
+                      "visual":  "Trên hình có các đạo sĩ ngồi quanh bàn/đàn lễ, ở giữa có quả cầu sáng hoặc đèn thiêng. Đèn sáng tượng trưng cho tri thức và sự chỉ dẫn; các đạo sĩ nói về học hỏi, truyền pháp và lời khuyên từ người có kinh nghiệm.",
+                      "keywords":  "Thông thái • Tu hành • Minh triết • Chỉ dẫn • Học hỏi • Trực giác • Bình an • Khai sáng • Đức hạnh • Cố vấn",
+                      "image":  "assets/thai-34-19.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  20,
+                      "title":  "Card 20 - Rujana và Sangthong (นางรจนา และ สังข์ทอง)",
+                      "name":  "Rujana và Sangthong (นางรจนา และ สังข์ทอง)",
+                      "legend":  "Rujana và Sangthong là hai nhân vật trong truyện cổ Thái Lan. Công chúa Rujana nhìn thấy phẩm chất tốt đẹp bên trong Sangthong dù chàng che giấu thân phận dưới lớp vỏ xấu xí.",
+                      "visual":  "Trên hình có Sangthong và Rujana đối diện nhau, một người mang dáng vẻ khác biệt, nền cung điện màu hồng. Sự đối diện nói về lựa chọn bằng trái tim; màu hồng là tình cảm, còn vẻ ngoài khác biệt nhắc đừng đánh giá chỉ bằng mắt.",
+                      "keywords":  "Chân thành • Tình yêu • Đức hạnh • Định mệnh • Kiên nhẫn • Hạnh phúc • Niềm tin • Chung thủy • Vượt thử thách • Viên mãn",
+                      "image":  "assets/thai-34-20.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  21,
+                      "title":  "Card 21 - Phra Mae Thorani (พระแม่ธรณี)",
+                      "name":  "Phra Mae Thorani (พระแม่ธรณี)",
+                      "legend":  "Phra Mae Thorani là Nữ thần Đất trong Phật giáo và tín ngưỡng Thái Lan. Khi Đức Phật bị Ma Vương quấy phá, bà vắt mái tóc chứa nước công đức, cuốn trôi ma quân và chứng minh sức mạnh của thiện nghiệp.",
+                      "visual":  "Trên hình có Nữ thần Đất đang vắt mái tóc dài, nước chảy xuống phía dưới. Mái tóc chứa nước công đức tượng trưng cho phước lành tích lũy; dòng nước là bằng chứng của thiện nghiệp, cuốn trôi điều sai trái.",
+                      "keywords":  "Công đức • Nhân quả • Bảo vệ • Kiên định • Chính nghĩa • Bình an • Nền tảng • Chứng minh • Chiến thắng • Đức hạnh",
+                      "image":  "assets/thai-34-21.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  22,
+                      "title":  "Card 22 - Phra Ram và Nang Sida (พระราม และ นางสีดา)",
+                      "name":  "Phra Ram và Nang Sida (พระราม และ นางสีดา)",
+                      "legend":  "Phra Ram và Nang Sida là hai nhân vật chính trong sử thi Ramakien. Dù trải qua chia ly và thử thách do quỷ vương Tosakanth gây ra, họ vẫn giữ trọn lòng chung thủy và cuối cùng đoàn tụ.",
+                      "visual":  "Trên hình có Phra Ram và Nang Sida ngồi cạnh nhau dưới ánh trăng, trong không gian rèm tím. Ánh trăng tượng trưng cho lời hứa và sự thủy chung; hai người ngồi gần nhau nói về hôn nhân, đồng hành và đoàn tụ sau thử thách.",
+                      "keywords":  "Chung thủy • Hôn nhân • Đồng hành • Niềm tin • Hy sinh • Tình yêu • Gia đình • Bền vững • Kiên nhẫn • Viên mãn",
+                      "image":  "assets/thai-34-22.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  23,
+                      "title":  "Card 23 - Phaya Khrut và Nang Kaki (พญาครุฑ และ นางกากี)",
+                      "name":  "Phaya Khrut và Nang Kaki (พญาครุฑ และ นางกากี)",
+                      "legend":  "Nang Kaki nổi tiếng với sắc đẹp tuyệt trần trong văn học Thái Lan. Vì vẻ đẹp ấy, nàng trở thành đối tượng tranh giành, phản ánh hệ lụy của mê đắm, dục vọng và sự thiếu sáng suốt trước cám dỗ.",
+                      "visual":  "Trên hình có chim thần Garuda dang cánh lớn ôm/nâng Nang Kaki, phía sau là mặt trăng. Cánh chim tượng trưng cho sức mạnh và ham muốn chiếm hữu; mặt trăng nói về mê hoặc, còn dáng bị nâng lên nhắc về cám dỗ và danh tiếng.",
+                      "keywords":  "Cám dỗ • Sắc đẹp • Dục vọng • Thử thách • Lựa chọn • Ghen tuông • Danh tiếng • Nghiệp duyên • Mất mát • Cảnh tỉnh",
+                      "image":  "assets/thai-34-23.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  24,
+                      "title":  "Card 24 - Phra Mae Phosop (พระแม่โพสพ)",
+                      "name":  "Phra Mae Phosop (พระแม่โพสพ)",
+                      "legend":  "Phra Mae Phosop là Nữ thần Lúa, được tôn kính như vị thần bảo hộ mùa màng. Người dân tin linh hồn của lúa là hiện thân của bà và làm lễ tạ ơn để cầu no đủ, sung túc.",
+                      "visual":  "Trên hình có nữ thần ngồi giữa đồng lúa vàng, tay cầm bông lúa, phía sau là bầu trời sáng. Bông lúa tượng trưng cho mùa màng và sự nuôi dưỡng; màu vàng nói về no đủ, còn dáng ngồi bình an là phước lành của đất đai.",
+                      "keywords":  "No đủ • Mùa màng • Thu hoạch • Phú quý • Sung túc • Sinh sôi • Nuôi dưỡng • Tài lộc • Phước lành • Thịnh vượng",
+                      "image":  "assets/thai-34-24.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  25,
+                      "title":  "Card 25 - Hanuman và Nang Benjakai (หนุมาน และ นางเบญจกาย)",
+                      "name":  "Hanuman và Nang Benjakai (หนุมาน และ นางเบญจกาย)",
+                      "legend":  "Hanuman là khỉ thần trung thành với Phra Ram trong sử thi Ramakien. Khi Nang Benjakai cải trang thành Nang Sida để đánh lừa quân đội Phra Ram, Hanuman dùng trí tuệ phát hiện sự thật.",
+                      "visual":  "Trên hình có Hanuman và Nang Benjakai trong khung cảnh cung điện, nhân vật khỉ trắng đang kiểm chứng sự thật. Hình khỉ thần tượng trưng cho trí tuệ nhanh nhạy; tư thế đối mặt nói về việc nhìn xuyên giả dạng và bảo vệ sự thật.",
+                      "keywords":  "Trung thành • Trí tuệ • Mưu lược • Hành động • Dũng cảm • Vượt thử thách • Bảo vệ • Sự thật • Kiên trì • Thành công",
+                      "image":  "assets/thai-34-25.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  26,
+                      "title":  "Card 26 - Kamadeva (กามเทพ)",
+                      "name":  "Kamadeva (กามเทพ)",
+                      "legend":  "Kamadeva là thần tình yêu trong Ấn Độ giáo, thường mang cung bằng mía và mũi tên kết từ hoa thơm. Ngài có khả năng khơi dậy tình yêu trong trái tim con người và thần linh.",
+                      "visual":  "Trên hình có Kamadeva bay trên mây, tay cầm cung tên, bên dưới có người và hoa cỏ. Cung tên tượng trưng cho sức hút tình yêu; mây nói về cảm xúc bay bổng, còn hoa cỏ là sự rung động và nhân duyên mới nảy nở.",
+                      "keywords":  "Tình yêu • Nhân duyên • Hấp dẫn • Lãng mạn • Cảm xúc • Hạnh phúc • Gắn kết • Thu hút • Hòa hợp • Rung động",
+                      "image":  "assets/thai-34-26.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  27,
+                      "title":  "Card 27 - Mekhala và Ramasura (เมขลา และ รามสูร)",
+                      "name":  "Mekhala và Ramasura (เมขลา และ รามสูร)",
+                      "legend":  "Mekhala là nữ thần biển cả, sở hữu viên ngọc phát sáng thần kỳ, còn Ramasura là quỷ khổng lồ luôn truy đuổi để cướp viên ngọc. Truyền thuyết này giải thích nguồn gốc của sấm sét.",
+                      "visual":  "Trên hình có Mekhala cầm viên ngọc sáng và Ramasura cầm rìu rượt đuổi giữa sấm chớp. Viên ngọc là điều quý giá cần bảo vệ; rìu tượng trưng cho xung đột, còn tia chớp nói về biến động nhanh và sự cảnh giác.",
+                      "keywords":  "Cạnh tranh • Xung đột • Tốc độ • Thử thách • Bảo vệ • Quyết tâm • Biến động • Sức mạnh • Cảnh giác • Chiến thắng",
+                      "image":  "assets/thai-34-27.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  28,
+                      "title":  "Card 28 - Phran Boon bắt Nang Monora (พรานบุญ จับนางมโนราห์)",
+                      "name":  "Phran Boon bắt Nang Monora (พรานบุญ จับนางมโนราห์)",
+                      "legend":  "Nang Monora là nàng tiên chim xinh đẹp sống trên thiên giới. Thợ săn Phran Boon dùng phép thuật bắt nàng xuống trần gian, mở đầu câu chuyện tình giữa Monora và Hoàng tử Suthon.",
+                      "visual":  "Trên hình có nàng tiên chim Monora với đôi cánh, người thợ săn cầm dây hoặc bùa phép đứng gần nước. Đôi cánh tượng trưng cho tự do và duyên trời; dây/bẫy nói về sự chia ly, còn mặt nước là cảm xúc và thử thách tình duyên.",
+                      "keywords":  "Duyên phận • Chia ly • Hy vọng • Kiên trì • Hạnh phúc • Thử thách • Định mệnh • Đoàn tụ • Tình yêu • Niềm tin",
+                      "image":  "assets/thai-34-28.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  29,
+                      "title":  "Card 29 - Phra Mae Nang Kwak (พระแม่นางกวัก)",
+                      "name":  "Phra Mae Nang Kwak (พระแม่นางกวัก)",
+                      "legend":  "Phra Mae Nang Kwak là nữ thần may mắn trong kinh doanh của người Thái. Hình tượng bà ngồi vẫy gọi tượng trưng cho việc mời khách hàng, tài lộc và cơ hội đến cửa hàng.",
+                      "visual":  "Trên hình có Nang Kwak ngồi vẫy tay, cạnh cây gậy/quạt và đèn vàng trong không gian cửa hàng. Bàn tay vẫy gọi tượng trưng cho hút khách; đèn vàng là tài lộc sáng cửa, còn dáng ngồi cho thấy sự ổn định trong buôn bán.",
+                      "keywords":  "Buôn may bán đắt • Hút khách • Tài lộc • Kinh doanh • Cơ hội • Thịnh vượng • May mắn • Thu hút • Phát đạt • Sung túc",
+                      "image":  "assets/thai-34-29.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  30,
+                      "title":  "Card 30 - Phra Narai Phan Mue (พระนารายณ์แปลง)",
+                      "name":  "Phra Narai Phan Mue (พระนารายณ์แปลง)",
+                      "legend":  "Phra Narai, tức thần Vishnu, là vị thần bảo hộ và duy trì trật tự vũ trụ. Khi thế gian xuất hiện ma quỷ hoặc bất công, ngài hóa hiện nhiều tay, mỗi tay cầm pháp khí để tiêu diệt cái ác và khôi phục cân bằng.",
+                      "visual":  "Trên hình có Phra Narai nhiều tay, mỗi tay cầm một pháp khí, phía sau là lửa và ánh cam. Nhiều tay tượng trưng cho khả năng xử lý nhiều việc; pháp khí là công cụ tiêu trừ cái ác, còn lửa nói về quyền năng chuyển hóa.",
+                      "keywords":  "Quyền năng • Bảo hộ • Chính nghĩa • Trí tuệ • Lãnh đạo • Kiểm soát • Sức mạnh • Chuyển hóa • Chiến thắng • Vượt qua nghịch cảnh",
+                      "image":  "assets/thai-34-30.png"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  31,
+                      "title":  "Card 31 - Phra Yommarat (พระยมราช)",
+                      "name":  "Phra Yommarat (พระยมราช)",
+                      "legend":  "Phra Yommarat là vị thần cai quản cõi âm trong tín ngưỡng Thái Lan, tương đồng với thần Yama. Ngài phán xét thiện ác của mỗi linh hồn sau khi qua đời, biểu tượng cho công lý và luật nhân quả.",
+                      "visual":  "Trên hình có Diêm Vương ngồi trên ngai, hai bên có người hầu/quỷ sứ và bên dưới là người đang quỳ. Ngai tượng trưng cho quyền phán xét; người quỳ nói về việc đối diện nghiệp quả, còn ánh sáng sau lưng là công lý không tránh được.",
+                      "keywords":  "Nhân quả • Công lý • Phán xét • Trách nhiệm • Luật lệ • Kết thúc • Nghiệp báo • Thức tỉnh • Công bằng • Chuyển hóa",
+                      "image":  "assets/thai-34-31.jpeg"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  32,
+                      "title":  "Card 32 - Mora (โมรา)",
+                      "name":  "Mora (โมรา)",
+                      "legend":  "Mora là nhân vật gắn với hình tượng chim công trong văn học và tín ngưỡng Thái Lan. Chim công tượng trưng cho vẻ đẹp, phẩm giá, sự cao quý và trí tuệ.",
+                      "visual":  "Trên hình có người đàn ông đứng cạnh phụ nữ, dưới chân có hình chim công hoặc chim đẹp màu xanh. Chim công tượng trưng cho sắc đẹp, danh dự và kiêu hãnh; dáng đứng giữa rừng nói về phẩm hạnh được thử thách trong đời sống.",
+                      "keywords":  "Danh dự • Cao quý • Vẻ đẹp • Phẩm hạnh • Kiêu hãnh • Trí tuệ • Thành tựu • Niềm tin • Phát triển • May mắn",
+                      "image":  "assets/thai-34-32.jpeg"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  33,
+                      "title":  "Card 33 - Krai Thong Slays Chalawan (ไกรทอง ปราบชาละวัน)",
+                      "name":  "Krai Thong Slays Chalawan (ไกรทอง ปราบชาละวัน)",
+                      "legend":  "Krai Thong là người anh hùng trong truyện dân gian Thái Lan, đã chiến đấu và tiêu diệt Chalawan, vị vua cá sấu hung dữ. Câu chuyện tượng trưng cho chính nghĩa chiến thắng cái ác.",
+                      "visual":  "Trên hình có Krai Thong cầm giáo/dao chiến đấu dưới nước, phía sau có cá sấu hoặc dòng nước dữ. Cá sấu tượng trưng cho hiểm nguy và cái ác ẩn sâu; vũ khí là lòng dũng cảm, còn nước xoáy nói về thử thách phải vượt qua.",
+                      "keywords":  "Dũng cảm • Chính nghĩa • Chiến thắng • Bảo vệ • Hành động • Quyết tâm • Anh hùng • Vượt khó • Công lý • Thành công",
+                      "image":  "assets/thai-34-33.jpeg"
+                  },
+                  {
+                      "sectionId":  "thai-34",
+                      "sectionTitle":  "Bộ thần thoại Thái 34 lá",
+                      "sectionSubtitle":  "Các vị thần, nhân vật Ramakien và biểu tượng dân gian",
+                      "number":  34,
+                      "title":  "Card 34 - Phra Aphaimani và Nang Phi Suea Samut (พระอภัยมณี และ นางผีเสื้อสมุทร)",
+                      "name":  "Phra Aphaimani và Nang Phi Suea Samut (พระอภัยมณี และ นางผีเสื้อสมุทร)",
+                      "legend":  "Phra Aphaimani và Nang Phi Suea Samut là hai nhân vật trong sử thi của Sunthorn Phu. Hoàng tử bị nữ quỷ biển đem lòng yêu và giữ lại trên đảo, rồi cùng con trai tìm cách trốn thoát để trở về tự do.",
+                      "visual":  "Trên hình có nữ quỷ biển ở dưới nước níu kéo, phía xa là người đứng trên vách đá cạnh biển. Biển tượng trưng cho cảm xúc sâu và ràng buộc; bàn tay níu kéo là sự chiếm hữu, còn vách đá phía xa nói về khát vọng thoát khỏi giới hạn.",
+                      "keywords":  "Tình yêu • Ràng buộc • Cám dỗ • Tự do • Chia ly • Hy sinh • Lựa chọn • Nghị lực • Trưởng thành • Giải thoát",
+                      "image":  "assets/thai-34-34.jpeg"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  1,
+                      "title":  "Card 1 - Phra Phikanet cưỡi Chuột (ปีชวด)",
+                      "name":  "Phra Phikanet cưỡi Chuột",
+                      "legend":  "Phra Phikanet, hay Ganesha, là vị thần của thành công, nghệ thuật và trí tuệ. Ngài là con của Shiva và Uma/Parvati, có lòng từ bi lớn, giúp con người vượt qua khổ đau và tháo gỡ chướng ngại.",
+                      "visual":  "Trên hình có Ganesha đầu voi ngồi trên chuột, tay cầm pháp khí, bánh ngọt và có dây móc. Đầu voi tượng trưng cho trí tuệ lớn; chuột là sự nhanh nhạy, đi khắp nơi tìm cơ hội; bánh ngọt nói về thành quả sau nỗ lực.",
+                      "keywords":  "Khởi đầu • Trí tuệ • Nhanh nhạy • Thành công • Nghệ thuật • Cơ hội • Di chuyển • Giải quyết vấn đề • Tự tin • May mắn",
+                      "image":  "assets/zodiac-12-01.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  2,
+                      "title":  "Card 2 - Phra Khonanthi (ปีฉลู)",
+                      "name":  "Phra Khonanthi",
+                      "legend":  "Phra Khonanthi là thần Nandi, thị giả và vật cưỡi thiêng của Shiva trên núi Kailasa. Khi Shiva muốn đi đâu, Nandi hóa thành bò trắng để chuyên chở, đồng thời là vị chủ quản các loài bốn chân.",
+                      "visual":  "Trên hình có bò trắng lớn, yên đỏ vàng và bóng Shiva phía sau. Bò trắng tượng trưng cho sức chịu đựng, sự trung thành và trách nhiệm; yên đỏ vàng nói về gánh nặng cao quý; bóng thần phía sau là sự phụng sự thiêng liêng.",
+                      "keywords":  "Trách nhiệm • Gánh vác • Kiên nhẫn • Bền bỉ • Trung thành • Gia đình • Nền tảng • Chậm mà chắc • Chịu khó • Ổn định",
+                      "image":  "assets/zodiac-12-02.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  3,
+                      "title":  "Card 3 - Phra Mae Uma cưỡi Hổ (ปีขาล)",
+                      "name":  "Phra Mae Uma cưỡi Hổ",
+                      "legend":  "Phra Mae Uma là phối ngẫu của Shiva, vừa dịu dàng, xinh đẹp, vừa có những hóa thân mạnh mẽ như Kali và Durga để tiêu diệt tà ác. Bà là hình tượng của nữ lực, quyền uy và sự bảo hộ.",
+                      "visual":  "Trên hình có nữ thần ngồi trên hổ, tay cầm hoa sen, đèn/lửa và pháp khí. Hổ tượng trưng cho quyền lực, lòng can đảm và bản năng mạnh; hoa sen là phẩm hạnh, còn lửa/pháp khí cho thấy sức mạnh bảo vệ chính nghĩa.",
+                      "keywords":  "Nữ lực • Quyền uy • Dũng cảm • Quyết đoán • Bảo vệ • Lãnh đạo • Sắc bén • Tự tin • Cải cách • Chiến thắng",
+                      "image":  "assets/zodiac-12-03.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  4,
+                      "title":  "Card 4 - Moon Goddess cưỡi Thỏ (ปีเถาะ)",
+                      "name":  "Moon Goddess cưỡi Thỏ",
+                      "legend":  "Nữ thần Mặt Trăng gắn với sự dịu dàng, vẻ đẹp, cảm xúc và nhịp điệu tự nhiên. Trong biểu tượng con giáp, thỏ đại diện cho sự mềm mại, lanh lợi, nhạy cảm và khả năng sinh sôi.",
+                      "visual":  "Trên hình có nữ thần ngồi trên thỏ trắng, tay nâng khay hoa, phía sau là mặt trăng tròn. Thỏ trắng tượng trưng cho sự hiền lành và nhanh nhạy; mặt trăng là trực giác, cảm xúc; khay hoa nói về sự dâng hiến và tình cảm tinh tế.",
+                      "keywords":  "Dịu dàng • Trực giác • Cảm xúc • Mềm mại • Duyên dáng • Bình an • Tình cảm • Nuôi dưỡng • May mắn • Nhạy bén",
+                      "image":  "assets/zodiac-12-04.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  5,
+                      "title":  "Card 5 - Phra Narai nằm trên biển (ปีมะโรง)",
+                      "name":  "Phra Narai nằm trên biển",
+                      "legend":  "Phra Narai, tức Vishnu, là vị thần bảo hộ và duy trì trật tự vũ trụ. Hình tượng ngài nằm trên biển vũ trụ cùng rắn thần Naga nói về sự nghỉ ngơi thiêng liêng trước khi tạo lập, bảo hộ và tái cân bằng thế gian.",
+                      "visual":  "Trên hình có Phra Narai nằm trên rắn Naga giữa biển, phía sau là mặt trăng lớn và các thiên thần bay. Naga tượng trưng cho quyền năng vũ trụ; biển là tiềm thức sâu; mặt trăng nói về chu kỳ, còn dáng nằm là sự bình tĩnh trước biến động.",
+                      "keywords":  "Bảo hộ • Cân bằng • Vũ trụ • Nghỉ ngơi • Trực giác • Tái tạo • Quyền năng • Bình an • Định mệnh • Chuyển hóa",
+                      "image":  "assets/zodiac-12-05.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  6,
+                      "title":  "Card 6 - Thao Wirupak và Rắn (ปีมะเส็ง)",
+                      "name":  "Thao Wirupak",
+                      "legend":  "Thao Wirupak là một trong Tứ Đại Thiên Vương, thường gắn với phương Tây và các loài rắn/Naga. Ngài bảo hộ thế gian, quan sát điều ẩn giấu và giữ gìn trật tự trước các thế lực nguy hiểm.",
+                      "visual":  "Trên hình có vị thiên vương ngồi trên rắn lớn, tay cầm vũ khí, phía sau là sông nước và bầu trời xám. Rắn tượng trưng cho bí mật, trực giác và sự chuyển hóa; vũ khí nói về phòng vệ, còn nước là cảm xúc cần được kiểm soát.",
+                      "keywords":  "Cảnh giác • Bí mật • Trực giác • Bảo vệ • Chuyển hóa • Quan sát • Kiểm soát • Nghiệp duyên • Sức mạnh ẩn • Khôn ngoan",
+                      "image":  "assets/zodiac-12-06.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  7,
+                      "title":  "Card 7 - Phra Arun cưỡi Ngựa (ปีมะเมีย)",
+                      "name":  "Phra Arun cưỡi Ngựa",
+                      "legend":  "Phra Arun là vị thần bình minh, biểu tượng của ánh sáng đầu ngày, sự thức tỉnh và khởi động hành trình mới. Ngài thường gắn với cỗ xe ngựa đưa ánh sáng vượt qua bóng tối.",
+                      "visual":  "Trên hình có vị thần đứng trên cỗ xe nhiều ngựa, tay cầm cờ/vũ khí, phía sau là mặt trời rực sáng. Ngựa tượng trưng cho tốc độ và tiến lên; mặt trời là khởi đầu, còn cỗ xe nói về mục tiêu và hướng đi rõ ràng.",
+                      "keywords":  "Khởi đầu • Tốc độ • Tiến lên • Năng lượng • Danh tiếng • Hành động • Thức tỉnh • Quyết tâm • Cơ hội • Thành công",
+                      "image":  "assets/zodiac-12-07.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  8,
+                      "title":  "Card 8 - Phra Taksa (ปีมะแม)",
+                      "name":  "Phra Taksa",
+                      "legend":  "Phra Taksa là hình tượng gắn với năm Dê, biểu thị sự hiền hòa, biết thích nghi, sống có tình cảm và giữ gìn sự bình ổn. Lá này thường nhấn mạnh đời sống gia đình, trách nhiệm và sự mềm mỏng.",
+                      "visual":  "Trên hình có vị thần đầu dê đứng cạnh dê trắng, tay cầm vòng sáng, phía sau là cây xanh. Đầu dê tượng trưng cho sự bền bỉ và mềm mỏng; dê trắng là sự hiền lành, còn vòng sáng nói về sự bảo hộ và phước lành.",
+                      "keywords":  "Hiền hòa • Gia đình • Bền bỉ • Chăm sóc • Nhẫn nại • Ổn định • Mềm mỏng • Phước lành • Tin cậy • Bình an",
+                      "image":  "assets/zodiac-12-08.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  9,
+                      "title":  "Card 9 - Hanuman (ปีวอก)",
+                      "name":  "Hanuman",
+                      "legend":  "Hanuman là vị khỉ thần trung thành và dũng mãnh trong Ramakien/Ramayana. Ngài nổi tiếng với sức mạnh, sự nhanh trí, tài biến hóa và lòng tận tụy khi phụng sự chính nghĩa.",
+                      "visual":  "Trên hình có Hanuman thân trắng đang múa/chiến đấu, hai tay cầm vòng hoặc pháp khí, dưới chân có vàng bạc. Thân khỉ trắng tượng trưng cho trí nhanh và lòng trung thành; động tác nhảy nói về linh hoạt, còn vàng bạc là thành quả sau hành động táo bạo.",
+                      "keywords":  "Trung thành • Linh hoạt • Mưu trí • Dũng cảm • Hành động • Tốc độ • Bảo vệ • Vượt khó • Thành công • Táo bạo",
+                      "image":  "assets/zodiac-12-09.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  10,
+                      "title":  "Card 10 - Phaya Sukreep (ปีระกา)",
+                      "name":  "Phaya Sukreep",
+                      "legend":  "Phaya Sukreep là chiến binh thân đỏ trong Ramakien, em của Phali và là tướng trung thành của Phra Ram. Ngài gắn với lòng tận tụy, sức chiến đấu và khả năng vượt qua trở ngại bằng quyết tâm.",
+                      "visual":  "Trên hình có chiến binh thân đỏ cầm kiếm, bên cạnh có gà trống, nền cây xanh. Kiếm tượng trưng cho quyết đoán và chiến đấu; gà trống nói về sự siêng năng, tỉnh thức và bắt đầu ngày mới; màu đỏ là nhiệt huyết hành động.",
+                      "keywords":  "Siêng năng • Tỉnh thức • Kiếm • Quyết đoán • Trung thành • Chiến đấu • Cảnh giác • Giao tiếp • Làm việc • Khởi động",
+                      "image":  "assets/zodiac-12-10.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  11,
+                      "title":  "Card 11 - Kumanthong (ปีจอ)",
+                      "name":  "Kumanthong",
+                      "legend":  "Kumanthong là linh đồng trong truyện Khun Chang Khun Phaen, được tin là có phép mầu giúp bảo vệ, gọi may mắn và đem lại tài lộc. Hình tượng này mang năng lượng trẻ thơ, vui vẻ nhưng cũng cần được dẫn dắt.",
+                      "visual":  "Trên hình có Kumanthong ngồi trên chó trắng, tay cầm túi tiền hoặc vật phẩm, bối cảnh là nhà cửa. Chó trắng tượng trưng cho trung thành và bảo vệ; túi tiền là may mắn tài lộc; dáng trẻ nhỏ nói về sự hồn nhiên nhưng dễ bốc đồng.",
+                      "keywords":  "May mắn • Bảo vệ • Trung thành • Trẻ thơ • Tài lộc • Vui vẻ • Tự do • Chăm sóc • Tin cậy • Hồn nhiên",
+                      "image":  "assets/zodiac-12-11.png"
+                  },
+                  {
+                      "sectionId":  "zodiac-12",
+                      "sectionTitle":  "Bộ 12 con giáp",
+                      "sectionSubtitle":  "Promayaan Birth-Year Cards",
+                      "number":  12,
+                      "title":  "Card 12 - Phra Nang Benjaganlayani (ปีกุน)",
+                      "name":  "Phra Nang Benjaganlayani",
+                      "legend":  "Phra Nang Benjaganlayani là nữ thần nổi bật bởi vẻ đẹp hoàn thiện: tóc đẹp, thân thể đẹp, răng đẹp, da đẹp và tuổi xuân đẹp. Bà tượng trưng cho sự dịu dàng, lòng thiện và phước lành đủ đầy.",
+                      "visual":  "Trên hình có nữ thần ngồi trên heo hồng, tay cầm hoa sen, phía sau là biển trời sáng. Heo tượng trưng cho sự no đủ và hưởng thụ; hoa sen là tâm thiện lành, còn biển trời sáng nói về cuộc sống thoải mái, phước lành và sự hài lòng.",
+                      "keywords":  "No đủ • Vẻ đẹp • Dịu dàng • Hoa sen • Phước lành • Từ bi • Hạnh phúc • Sung túc • Giúp đỡ • Viên mãn",
+                      "image":  "assets/zodiac-12-12.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  1,
+                      "title":  "Card 1 - Phra Ram Plaeng Son",
+                      "name":  "Phra Ram Plaeng Son",
+                      "legend":  "Phra Ram là hóa thân của Phra Narai, giáng thế để tiêu diệt Thotsakan trong Ramakien. Ngài là vua của Ayodhya, biểu tượng của lòng nhân, uy quyền, sự chính trực và khả năng dẫn dắt người khác bằng niềm tin.",
+                      "visual":  "Trên hình có Phra Ram đứng trên xe, tay kéo cung tên hướng về mục tiêu. Cung tên tượng trưng cho sự tập trung và quyết định dứt khoát; cỗ xe là hành trình tiến đến chiến thắng; lửa phía sau nói về sức mạnh hành động.",
+                      "keywords":  "Mục tiêu • Quyết đoán • Lãnh đạo • Chính nghĩa • Tầm nhìn • Hành động • Chiến thắng • Can đảm • Kế hoạch • Thành công",
+                      "image":  "assets/symbol-12-01.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  2,
+                      "title":  "Card 2 - Khong Beng",
+                      "name":  "Khong Beng",
+                      "legend":  "Khong Beng, tức Gia Cát Lượng, là quân sư tài ba của nước Thục trong thời Tam Quốc. Ông nổi tiếng vì trí tuệ, mưu lược, khả năng nhìn xa và hiểu thế trời đất.",
+                      "visual":  "Trên hình có Khong Beng mặc áo trắng cầm quạt, phía sau là rồng lớn và viên ngọc sáng. Quạt tượng trưng cho trí tuệ điều khiển tình thế; rồng là quyền lực và tham vọng; viên ngọc nói về mục tiêu, thành tựu và sự sáng suốt.",
+                      "keywords":  "Mưu lược • Trí tuệ • Tính toán • Tầm nhìn • Học hỏi • Quyền lực • Thành tựu • Bình tĩnh • Cố vấn • Kế hoạch",
+                      "image":  "assets/symbol-12-02.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  3,
+                      "title":  "Card 3 - Phra Mae Khongkha",
+                      "name":  "Phra Mae Khongkha",
+                      "legend":  "Phra Mae Khongkha là nữ thần sông nước, được xem là dòng nước thiêng giúp rửa sạch tội lỗi và đem lại sự mát lành. Bà ban phước bình an, giải trừ xui rủi và nuôi dưỡng sự sống.",
+                      "visual":  "Trên hình có nữ thần ngồi trên cá lớn giữa mặt nước, tay cầm bình nước. Cá tượng trưng cho may mắn và sự linh hoạt; bình nước là sự ban phát, thanh lọc và chữa lành; sóng nước nói về cảm xúc và lòng bao dung.",
+                      "keywords":  "Nước • Thanh lọc • Cho đi • Chữa lành • May mắn • Bao dung • Dịu mát • Sáng tạo • Bình an • Nuôi dưỡng",
+                      "image":  "assets/symbol-12-03.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  4,
+                      "title":  "Card 4 - Phra Nang Suphannamatcha",
+                      "name":  "Phra Nang Suphannamatcha",
+                      "legend":  "Phra Nang Suphannamatcha là con gái của Thotsakan và một người cá. Trong Ramakien, nàng từng ngăn Hanuman xây đường vượt biển, sau đó trở thành vợ của Hanuman và sinh ra Matchanu.",
+                      "visual":  "Trên hình có nàng tiên cá bên mặt nước, cạnh một phụ nữ trẻ, phía trên là mặt trời/mặt trăng sáng. Đuôi cá tượng trưng cho cảm xúc và sự quyến rũ; nước là tình cảm mềm mại; ánh sáng tròn nói về vẻ đẹp, sự tươi mới và bình yên.",
+                      "keywords":  "Duyên dáng • Tình cảm • Hòa hợp • Mềm mại • Chăm sóc • Lãng mạn • Bình yên • Sắc đẹp • Tin tưởng • Nhẹ nhàng",
+                      "image":  "assets/symbol-12-04.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  5,
+                      "title":  "Card 5 - Phra Phai",
+                      "name":  "Phra Phai",
+                      "legend":  "Phra Phai là thần Gió, thuộc hạ của Phra In, cai quản các luồng gió ở nhiều phương cõi. Ngài tượng trưng cho chuyển động, sự thay đổi và trạng thái không ngừng biến chuyển.",
+                      "visual":  "Trên hình có vị thần cưỡi ngựa, tay cầm lá cờ đỏ lớn bay trong gió. Lá cờ là dấu hiệu của hướng đi và chiến thắng; ngựa tượng trưng cho chuyển động; gió làm cờ tung lên nói về biến động, do dự và sự cần thiết phải chọn hướng rõ ràng.",
+                      "keywords":  "Gió • Biến động • Di chuyển • Lá cờ • Lựa chọn • Do dự • Thay đổi • Tự do • Cảnh báo • Linh hoạt",
+                      "image":  "assets/symbol-12-05.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  6,
+                      "title":  "Card 6 - Phra Kritsana",
+                      "name":  "Phra Kritsana",
+                      "legend":  "Phra Kritsana là một hóa thân của Phra Narai, giáng thế để khuất phục các asura như Panasura và Kamsa. Hình tượng này gắn với sự vui tươi, hòa bình, âm nhạc và sức chịu đựng trong trách nhiệm.",
+                      "visual":  "Trên hình có Phra Kritsana ngồi trên bò trắng, tay cầm sáo, phía sau là ánh sáng. Bò trắng tượng trưng cho sự bền bỉ và đáng tin; sáo là niềm vui, lời nói thuyết phục và sự nghỉ ngơi sau mệt mỏi; ánh sáng nói về tâm hồn vui tươi.",
+                      "keywords":  "Niềm vui • Sáo • Bò trắng • Bình yên • Bền bỉ • Lời nói • Hài lòng • Đơn giản • Kiên nhẫn • Hạnh phúc",
+                      "image":  "assets/symbol-12-06.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  7,
+                      "title":  "Card 7 - Khun Phaen và Nang Phimphila Lai",
+                      "name":  "Khun Phaen và Nang Phimphila Lai",
+                      "legend":  "Khun Phaen và Nang Phimphila Lai là hai nhân vật trong truyện Khun Chang Khun Phaen. Lá bài mô tả khoảnh khắc tình yêu say mê, hấp dẫn nhưng dễ thiếu cân nhắc và dễ dẫn tới hệ lụy.",
+                      "visual":  "Trên hình có đôi nam nữ ngồi gần nhau trong phòng, rèm và ánh sáng tạo không khí riêng tư. Sự gần gũi tượng trưng cho mê đắm và khát vọng tình yêu; căn phòng kín nói về bí mật; rèm mỏng nhắc đến ranh giới mong manh giữa yêu thương và sai lầm.",
+                      "keywords":  "Say mê • Tình yêu • Cám dỗ • Bí mật • Hấp dẫn • Thiếu cân nhắc • Gắn bó • Lựa chọn • Mộng mơ • Rủi ro",
+                      "image":  "assets/symbol-12-07.png"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  8,
+                      "title":  "Card 8 - Phayapali Chap Pu Thotsakan",
+                      "name":  "Phayapali Chap Pu Thotsakan",
+                      "legend":  "Phaya Pali là chiến binh trong Ramakien, được ban phước khiến đối thủ mất một nửa sức mạnh khi giao chiến. Câu chuyện bắt cua Thotsakan nói về việc phát hiện nguy hiểm và kịp thời khống chế nó.",
+                      "visual":  "Trên hình có Phaya Pali màu xanh đang khống chế con cua lớn. Cua tượng trưng cho nguy hiểm ẩn nấp và vấn đề bất ngờ; dây/động tác bắt giữ nói về kiểm soát tình hình; màu xanh của Pali biểu thị sức mạnh chiến binh và sự phản ứng nhanh.",
+                      "keywords":  "Khống chế • Nguy hiểm • Quyết đoán • Tự vệ • Áp lực • Xử lý nhanh • Chiến binh • Cảnh giác • Thoát hiểm • Kiểm soát",
+                      "image":  "assets/symbol-12-08.jpeg"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  9,
+                      "title":  "Card 9 - Phaya Ratchasi",
+                      "name":  "Phaya Ratchasi",
+                      "legend":  "Phaya Ratchasi là linh thú quyền lực trong rừng Himmapan, khiến muôn loài kính sợ. Hình tượng này đại diện cho uy quyền, lòng dũng cảm, sự nổi bật và quyết tâm không lùi trước trở ngại.",
+                      "visual":  "Trên hình có sư tử thần màu vàng đứng trên vách đá, đuôi như ngọn lửa. Sư tử tượng trưng cho uy quyền và lòng can đảm; vách đá là vị trí cao, danh dự và thử thách; đuôi lửa nói về ý chí mạnh và năng lượng chinh phục.",
+                      "keywords":  "Uy quyền • Sư tử • Can đảm • Danh dự • Lãnh đạo • Tự tin • Thử thách • Tham vọng • Mạnh mẽ • Chiến thắng",
+                      "image":  "assets/symbol-12-09.jpeg"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  10,
+                      "title":  "Card 10 - Nang Sida",
+                      "name":  "Nang Sida",
+                      "legend":  "Nang Sida là hoàng hậu của Phra Ram và là hóa thân của Lakshmi trong Ramakien. Bà tượng trưng cho vẻ đẹp, sự dịu dàng, phẩm hạnh, nhưng cũng gắn với những thử thách lớn trong tình yêu.",
+                      "visual":  "Trên hình có Nang Sida ngồi một mình trên giường/ghế, nền hồng tím và dáng vẻ trầm lặng. Tư thế ngồi một mình nói về chờ đợi và thử thách tình cảm; màu hồng là tình yêu; không gian yên tĩnh nhắc đến sự kiên nhẫn, phẩm hạnh và nỗi buồn kín đáo.",
+                      "keywords":  "Chờ đợi • Phẩm hạnh • Tình yêu • Dịu dàng • Thử thách • Kiên nhẫn • Sắc đẹp • Chung thủy • Cô đơn • Hy vọng",
+                      "image":  "assets/symbol-12-10.jpeg"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  11,
+                      "title":  "Card 11 - Thepphabut Yutitham",
+                      "name":  "Thepphabut Yutitham",
+                      "legend":  "Thepphabut Yutitham là vị thần của sự trong sạch và công lý. Ngài cầm cán cân, biểu tượng của ngay thẳng, công bằng, trung lập và khả năng phán xét đúng sai bằng lý trí.",
+                      "visual":  "Trên hình có vị thần mặc trắng cầm cán cân trong cung điện. Cán cân tượng trưng cho công lý và sự cân bằng; áo trắng nói về trong sạch; không gian cung điện nhấn mạnh tính chính thức, luật lệ và trách nhiệm trước quyết định.",
+                      "keywords":  "Công lý • Cán cân • Trung lập • Lý trí • Công bằng • Quyết định • Luật lệ • Chính trực • Cân bằng • Sự thật",
+                      "image":  "assets/symbol-12-11.jpeg"
+                  },
+                  {
+                      "sectionId":  "symbol-12",
+                      "sectionTitle":  "Bộ 12 biểu tượng",
+                      "sectionSubtitle":  "Ramakien, thần nước, công lý và các linh thú",
+                      "number":  12,
+                      "title":  "Card 12 - Thepwida Maengpong",
+                      "name":  "Thepwida Maengpong",
+                      "legend":  "Thepwida Maengpong là nữ thần bảo vệ khỏi độc hại và nguy hiểm. Bà cầm bọ cạp, biểu tượng cho vẻ đẹp có phần bí ẩn, khả năng tự vệ, sự cảnh giác và sức chịu đựng qua khó khăn.",
+                      "visual":  "Trên hình có nữ thần mặc trắng cầm bọ cạp, đứng giữa rừng cây. Bọ cạp tượng trưng cho độc tố, phòng vệ và phản ứng mạnh khi bị chạm tới; áo trắng cho thấy tâm trong sạch; rừng cây là môi trường ẩn chứa thử thách cần tỉnh táo.",
+                      "keywords":  "Bọ cạp • Tự vệ • Cảnh giác • Bí ẩn • Chịu đựng • Bảo vệ • Nội lực • Chuyển hóa • Sâu sắc • Vượt nghiệp",
+                      "image":  "assets/symbol-12-12.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  1,
+                      "title":  "Card 1 - Thep Phra Athit",
+                      "name":  "Thep Phra Athit - Thần Mặt Trời",
+                      "legend":  "Thep Phra Athit là thần Mặt Trời, vị thần đem ánh sáng, sự sống và sinh khí cho thế gian. Ngài tượng trưng cho quyền lực, danh tiếng, hạnh phúc, thành công và uy tín được người khác kính trọng.",
+                      "visual":  "Trên hình có thần Mặt Trời ngồi trên sư tử, tay cầm hoa sen, phía sau là ánh nắng vàng rực. Sư tử tượng trưng cho quyền uy và danh vọng; mặt trời là ánh sáng thành công; hoa sen nói về trí tuệ nở rộ và khởi đầu tốt đẹp.",
+                      "keywords":  "Mặt Trời • Quyền lực • Danh tiếng • Thành công • Sư tử • Hoa sen • Lãnh đạo • Hạnh phúc • Uy tín • Sức sống",
+                      "image":  "assets/planet-7-01.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  2,
+                      "title":  "Card 2 - Thep Phra Chan",
+                      "name":  "Thep Phra Chan - Thần Mặt Trăng",
+                      "legend":  "Thep Phra Chan là thần của ban đêm, vẻ đẹp, sự quyến rũ và cảm xúc. Lá bài gắn với sự mộng mơ, trí tưởng tượng, tình yêu, sự dịu dàng nhưng cũng có tính thay đổi và do dự.",
+                      "visual":  "Trên hình có thần Mặt Trăng cưỡi ngựa trắng, tay cầm kiếm, phía sau là vầng trăng lớn. Ngựa trắng tượng trưng cho trực giác và trách nhiệm; kiếm nói về tự vệ và sự nghi ngờ; mặt trăng là cảm xúc, sự lãng mạn và những điều chưa rõ.",
+                      "keywords":  "Mặt Trăng • Cảm xúc • Trực giác • Quyến rũ • Do dự • Ngựa trắng • Kiếm • Mộng mơ • Tình yêu • Nhạy cảm",
+                      "image":  "assets/planet-7-02.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  3,
+                      "title":  "Card 3 - Thep Phra Angkhan",
+                      "name":  "Thep Phra Angkhan - Thần Sao Hỏa",
+                      "legend":  "Thep Phra Angkhan là thần chiến tranh và chiến đấu. Ngài đại diện cho sức mạnh nam tính, sự gan dạ, nóng nảy, quyết liệt và khả năng vượt qua khó khăn bằng ý chí mạnh.",
+                      "visual":  "Trên hình có thần chiến binh cưỡi trâu đen, tay cầm giáo và gậy, nền hồng đỏ. Trâu đen tượng trưng cho sức chịu đựng và gánh nặng; giáo và gậy là vũ khí chiến đấu; màu đỏ hồng nói về xung đột, nhiệt huyết và áp lực.",
+                      "keywords":  "Sao Hỏa • Chiến đấu • Trâu • Giáo • Gậy • Dũng cảm • Xung đột • Nóng nảy • Gánh nặng • Vượt khó",
+                      "image":  "assets/planet-7-03.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  4,
+                      "title":  "Card 4 - Thep Phra Phut",
+                      "name":  "Thep Phra Phut - Thần Sao Thủy",
+                      "legend":  "Thep Phra Phut là thần của lời nói, giao tiếp, thương mại và buôn bán. Ngài tượng trưng cho trí nhanh, sự hoạt bát, khả năng thương lượng, học hỏi và tìm đường đi riêng.",
+                      "visual":  "Trên hình có thần Sao Thủy cưỡi voi trắng, tay cầm móc voi, mặc sắc xanh. Voi trắng tượng trưng cho trí nhớ, sự tự do và phẩm giá; móc voi là khả năng dẫn dắt, thuyết phục; màu xanh nói về giao tiếp, học hỏi và thương mại.",
+                      "keywords":  "Sao Thủy • Giao tiếp • Thương mại • Voi trắng • Móc voi • Nhanh trí • Học hỏi • Đàm phán • Tự do • Cơ hội",
+                      "image":  "assets/planet-7-04.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  5,
+                      "title":  "Card 5 - Thep Phra Phruhasabodi",
+                      "name":  "Thep Phra Phruhasabodi - Thần Sao Mộc",
+                      "legend":  "Thep Phra Phruhasabodi là thần của tri thức, thầy giáo và trí tuệ. Ngài là bậc hướng dẫn đáng kính, đại diện cho học vấn, đạo đức, lời khuyên từ người lớn và sự trưởng thành nội tâm.",
+                      "visual":  "Trên hình có vị thầy cưỡi hươu vàng, tay cầm bảng viết/bút, sau lưng có ánh sáng. Hươu vàng tượng trưng cho sự thuần khiết và chính trực; bảng viết là học tập và truyền dạy; ánh sáng trắng nói về minh triết và sự khai sáng.",
+                      "keywords":  "Sao Mộc • Tri thức • Thầy giáo • Hươu vàng • Bảng viết • Minh triết • Đạo đức • Học tập • Cố vấn • Trưởng thành",
+                      "image":  "assets/planet-7-05.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  6,
+                      "title":  "Card 6 - Thep Phra Suk",
+                      "name":  "Thep Phra Suk - Thần Sao Kim",
+                      "legend":  "Thep Phra Suk là thần của tình yêu, tiền bạc, sự sung túc và vẻ đẹp. Lá bài nói về khoái cảm, nghệ thuật, tài lộc, sự hấp dẫn và đời sống dễ chịu nhưng cần tránh đắm chìm hưởng thụ.",
+                      "visual":  "Trên hình có thần Sao Kim cưỡi bò trắng, tay cầm gậy, trang phục đẹp và nền xanh sáng. Bò trắng tượng trưng cho sức bền và sự ổn định; cây gậy là sự nâng đỡ và phong vị; màu xanh sáng nói về tình yêu, nghệ thuật và sự sung túc.",
+                      "keywords":  "Sao Kim • Tình yêu • Tiền bạc • Bò trắng • Gậy • Nghệ thuật • Hưởng thụ • Sắc đẹp • Sung túc • Hấp dẫn",
+                      "image":  "assets/planet-7-06.jpeg"
+                  },
+                  {
+                      "sectionId":  "planet-7",
+                      "sectionTitle":  "Bộ 7 hành tinh",
+                      "sectionSubtitle":  "Mặt Trời, Mặt Trăng và các sao trong chiêm tinh Thái",
+                      "number":  7,
+                      "title":  "Card 7 - Thep Phra Sao",
+                      "name":  "Thep Phra Sao - Thần Sao Thổ",
+                      "legend":  "Thep Phra Sao là thần của khổ đau, thử thách và những bài học kéo dài. Ngài đại diện cho sự chịu đựng, nỗi lo, trách nhiệm nặng nề và khả năng vượt qua khó khăn bằng kiên nhẫn.",
+                      "visual":  "Trên hình có thần Sao Thổ cưỡi hổ, tay cầm cung và mũi tên/đinh ba, nền tím trầm. Hổ tượng trưng cho nguy hiểm và sự cảnh giác; cung tên là kỹ năng đối diện trở ngại; sắc tím đen nói về nỗi buồn, áp lực và bài học nghiệp quả.",
+                      "keywords":  "Sao Thổ • Thử thách • Hổ • Cung tên • Kiên nhẫn • Khổ đau • Trách nhiệm • Cảnh giác • Bền bỉ • Vượt nghiệp",
+                      "image":  "assets/planet-7-07.jpeg"
+                  }
+              ]
+};
+
+    const keywordMap = {
+      "Nhiệt huyết":"Passion","Hành động":"Action","Chuyển hóa":"Transformation","Thanh tẩy":"Purification","Khởi đầu":"Beginning","Quyết tâm":"Determination","Đam mê":"Passion","Sức mạnh":"Strength","Ý chí":"Willpower","Tái sinh":"Rebirth",
+      "Gia đình":"Family","Tình yêu":"Love","Bao dung":"Compassion","Hy sinh":"Sacrifice","Chăm sóc":"Care","Nuôi dưỡng":"Nurturing","Hạnh phúc":"Happiness","Bình an":"Peace","Đức hạnh":"Virtue","Nữ tính":"Feminine energy",
+      "Chiến thắng":"Victory","Dũng cảm":"Courage","Lãnh đạo":"Leadership","Thành công":"Success","Quyết đoán":"Decisiveness","Bảo vệ":"Protection","Vượt khó":"Overcoming hardship","Tiến lên":"Moving forward",
+      "Mưa thuận":"Favorable rain","Chữa lành":"Healing","Cảm xúc":"Emotion","Thanh lọc":"Cleansing","Phát triển":"Growth","Sinh sôi":"Fertility","Cân bằng":"Balance","Phúc lành":"Blessing","Thuận lợi":"Good fortune",
+      "Trí tuệ":"Wisdom","Giác ngộ":"Awakening","Minh triết":"Insight","Học hỏi":"Learning","Thiền định":"Meditation","Kinh nghiệm":"Experience","Chỉ dẫn":"Guidance","Bình tĩnh":"Calmness","Cố vấn":"Advisor","Khai sáng":"Enlightenment",
+      "Tri thức":"Knowledge","Nghệ thuật":"Art","Sáng tạo":"Creativity","Giao tiếp":"Communication","Cảm hứng":"Inspiration","Giáo dục":"Education","Tài năng":"Talent","Thành tựu":"Achievement",
+      "Chính trực":"Integrity","Kỷ luật":"Discipline","Trách nhiệm":"Responsibility","Kiên định":"Steadfastness","Công bằng":"Fairness","Uy tín":"Prestige","Ổn định":"Stability",
+      "Thử thách":"Challenge","Tham vọng":"Ambition","Cám dỗ":"Temptation","Biến động":"Change","Bí mật":"Secret","Nghiệp quả":"Karma","Nội tâm":"Inner world","Thức tỉnh":"Awakening","Kiên cường":"Resilience",
+      "Trực giác":"Intuition","Tâm linh":"Spirituality","Buông bỏ":"Letting go","May mắn":"Luck","Nghiệp duyên":"Karmic bond",
+      "Tài lộc":"Wealth","Thịnh vượng":"Prosperity","Giàu có":"Riches","Bảo hộ":"Protection","Quyền lực":"Power","Sung túc":"Abundance","An toàn":"Safety",
+      "Vượt chướng ngại":"Removing obstacles","Cơ hội":"Opportunity","Khôn ngoan":"Wisdom","Thay đổi":"Change","Kết thúc":"Ending","Danh tiếng":"Reputation","Tự tin":"Confidence",
+      "Phồn vinh":"Prosperity","Giàu sang":"Luxury","Viên mãn":"Fulfillment","Hòa hợp":"Harmony","Đức độ":"Virtue","Kỹ thuật":"Technique","Xây dựng":"Building","Tay nghề":"Craftsmanship","Thiết kế":"Design","Chế tác":"Making","Lao động":"Work","Phát minh":"Invention","Khéo léo":"Skill",
+      "Công lý":"Justice","Chính nghĩa":"Righteousness","Quyền năng":"Divine power","Cứu giúp":"Rescue","Trung thành":"Loyalty","Thông thái":"Wisdom","Tu hành":"Spiritual practice",
+      "Chân thành":"Sincerity","Định mệnh":"Destiny","Kiên nhẫn":"Patience","Niềm tin":"Faith","Chung thủy":"Faithfulness","Công đức":"Merit","Nhân quả":"Cause and effect","Nền tảng":"Foundation","Chứng minh":"Proof",
+      "Hôn nhân":"Marriage","Đồng hành":"Companionship","Bền vững":"Lasting bond","Sắc đẹp":"Beauty","Dục vọng":"Desire","Lựa chọn":"Choice","Ghen tuông":"Jealousy","Mất mát":"Loss","Cảnh tỉnh":"Warning",
+      "No đủ":"Plenty","Mùa màng":"Harvest season","Thu hoạch":"Harvest","Phú quý":"Wealth","Mưu lược":"Strategy","Sự thật":"Truth","Lãng mạn":"Romance","Gắn kết":"Connection","Thu hút":"Attraction","Rung động":"Heart flutter",
+      "Cạnh tranh":"Competition","Xung đột":"Conflict","Tốc độ":"Speed","Cảnh giác":"Alertness","Duyên phận":"Fate","Chia ly":"Separation","Hy vọng":"Hope","Đoàn tụ":"Reunion","Buôn may bán đắt":"Good business","Hút khách":"Attracting customers","Kinh doanh":"Business","Phát đạt":"Business growth",
+      "Kiểm soát":"Control","Vượt qua nghịch cảnh":"Overcoming adversity","Phán xét":"Judgment","Luật lệ":"Rules","Nghiệp báo":"Karmic result","Danh dự":"Honor","Cao quý":"Nobility","Phẩm hạnh":"Good character","Kiêu hãnh":"Pride","Anh hùng":"Hero","Ràng buộc":"Attachment","Tự do":"Freedom","Nghị lực":"Willpower","Trưởng thành":"Maturity","Giải thoát":"Liberation",
+      "Nhanh nhạy":"Agility","Di chuyển":"Movement","Giải quyết vấn đề":"Problem solving","Gánh vác":"Carrying burdens","Bền bỉ":"Endurance","Chậm mà chắc":"Slow and steady","Nữ lực":"Feminine power","Dịu dàng":"Gentleness","Tốc độ":"Speed","Lời nói":"Speech","Hài lòng":"Contentment",
+      "Mặt Trời":"Sun","Mặt Trăng":"Moon","Sao Hỏa":"Mars","Sao Thủy":"Mercury","Sao Mộc":"Jupiter","Sao Kim":"Venus","Sao Thổ":"Saturn","Sư tử":"Lion","Hoa sen":"Lotus","Ngựa trắng":"White horse","Kiếm":"Sword","Trâu":"Buffalo","Giáo":"Spear","Gậy":"Staff","Voi trắng":"White elephant","Móc voi":"Elephant hook","Hươu vàng":"Golden deer","Bảng viết":"Writing tablet","Bò trắng":"White ox","Hổ":"Tiger","Cung tên":"Bow and arrow"
+    };
+
+    function splitKeywords(text) {
+      return (text || "").split("•").map(item => item.trim()).filter(Boolean);
+    }
+
+    function translateKeywords(text) {
+      return splitKeywords(text).map(item => keywordMap[item] || item).join(" • ");
+    }
+
+    function englishName(name) {
+      return (name || "")
+        .replace(/\s*\([^)]*[\u0E00-\u0E7F][^)]*\)/g, "")
+        .replace(" - Thần ", " - God of ")
+        .replace(" - Nữ thần ", " - Goddess of ");
+    }
+
+    function englishLegend(card) {
+      const keys = translateKeywords(card.keywords);
+      return `${englishName(card.name)} is read through the main themes of ${keys}. This English side gives a concise reading while the Vietnamese side keeps the full original explanation.`;
+    }
+
+    function englishVisual(card) {
+      const keys = translateKeywords(card.keywords);
+      return `Visual reading: observe the animal, weapon, light, water, fire, lotus, moon or ritual object shown on the card. These symbols point to ${keys}.`;
+    }
+
+    let activeSection = "all";
+    let searchText = "";
+
+    const nav = document.getElementById("sectionNav");
+    const grid = document.getElementById("cardGrid");
+    const searchInput = document.getElementById("searchInput");
+    const activeTitle = document.getElementById("activeTitle");
+    const visibleCount = document.getElementById("visibleCount");
+
+    function renderNav() {
+      const all = document.createElement("button");
+      all.className = "nav-button";
+      all.dataset.section = "all";
+      all.innerHTML = `<strong>Tất cả bộ bài / All decks</strong><span>${DATA.cards.length} lá trong 4 mục</span>`;
+      nav.appendChild(all);
+
+      DATA.sections.forEach(section => {
+        const button = document.createElement("button");
+        button.className = "nav-button";
+        button.dataset.section = section.id;
+        button.innerHTML = `<strong>${section.title}</strong><span>${section.count} lá - ${section.subtitle}</span>`;
+        nav.appendChild(button);
+      });
+
+      nav.addEventListener("click", event => {
+        const button = event.target.closest("button[data-section]");
+        if (!button) return;
+        activeSection = button.dataset.section;
+        render();
+      });
+    }
+
+    function matches(card) {
+      if (activeSection !== "all" && card.sectionId !== activeSection) return false;
+      if (!searchText) return true;
+      const text = [card.name, card.legend, card.visual, card.keywords, englishName(card.name), translateKeywords(card.keywords)].join(" ").toLowerCase();
+      return text.includes(searchText.toLowerCase());
+    }
+
+    function keywordHtml(text, english = false) {
+      const source = english ? translateKeywords(text) : text;
+      return splitKeywords(source).map(item => `<span class="keyword">${item}</span>`).join("");
+    }
+
+    function sectionTitle() {
+      if (activeSection === "all") return "Tất cả 65 lá / All 65 Cards";
+      const section = DATA.sections.find(item => item.id === activeSection);
+      return section ? section.title : "Tất cả 65 lá / All 65 Cards";
+    }
+
+    function renderCard(card) {
+      const article = document.createElement("article");
+      article.className = "card";
+      article.innerHTML = `
+        <div class="card-media">
+          <img src="${card.image}" alt="${card.name}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <p class="card-kicker">${card.sectionTitle} - Lá ${card.number}</p>
+          <h3>${card.name}</h3>
+          <div class="bilingual-grid">
+            <div class="lang-panel vi">
+              <div class="lang-title">Tiếng Việt</div>
+              <div class="info-block"><strong>Tên vị thần</strong><p>${card.name}</p></div>
+              <div class="info-block"><strong>Truyền thuyết vị thần</strong><p>${card.legend}</p></div>
+              <div class="info-block"><strong>Hình ảnh lá bài nghĩa gì</strong><p>${card.visual}</p></div>
+              <div class="info-block"><strong>Từ khóa lá bài</strong><div class="keyword-row">${keywordHtml(card.keywords)}</div></div>
+            </div>
+            <div class="lang-panel en">
+              <div class="lang-title">English</div>
+              <div class="info-block"><strong>Deity / Card Name</strong><p>${englishName(card.name)}</p></div>
+              <div class="info-block"><strong>Myth Summary</strong><p>${englishLegend(card)}</p></div>
+              <div class="info-block"><strong>Visual Meaning</strong><p>${englishVisual(card)}</p></div>
+              <div class="info-block"><strong>Card Keywords</strong><div class="keyword-row">${keywordHtml(card.keywords, true)}</div></div>
+            </div>
+          </div>
+        </div>
+      `;
+      return article;
+    }
+
+    function render() {
+      document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.toggle("active", button.dataset.section === activeSection);
+      });
+      activeTitle.textContent = sectionTitle();
+      const cards = DATA.cards.filter(matches);
+      visibleCount.textContent = cards.length;
+      grid.innerHTML = "";
+      cards.forEach(card => grid.appendChild(renderCard(card)));
+    }
+
+    searchInput.addEventListener("input", event => {
+      searchText = event.target.value.trim();
+      render();
+    });
+
+    renderNav();
+    render();
+  </script>
+</body>
+</html>
